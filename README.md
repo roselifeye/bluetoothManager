@@ -9,11 +9,11 @@ This is a similar function, just basic, to iBeacons. It now mainly focuses on ho
 For some reason, Apple only allow users to search, or get information from iBeacons, which you already knew their UUIDs. We only can identify iBeacons by their majors and minors. In addition, the bluetooth devices also have to follow the protocol of iBeacons. 
 However, we can easily get bluetooth devices, and it is also simple for users to convert their mobile devices to bluetooth devices. In this situation, we can not use the iBeacons apis to support our requirement.
 
-#Functions
+# Functions
 SPBeacon contains all properties of beacons.
 SPBlueToothManager is responsible for Searching beacons(or said bluetooth devices), Getting information from beacons, Filtering beacons, and backing information.
 
-#What's new
+# What's new?
 2015.01.28
 (1)Work well with beacons searching.
 (2)Filter bluetooth devices with their names.
