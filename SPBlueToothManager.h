@@ -18,11 +18,18 @@
 
 @end
 
-@interface SPBlueToothManager : NSObject <CBCentralManagerDelegate> {
+@interface SPBlueToothManager : NSObject <CBCentralManagerDelegate, CBPeripheralDelegate> {
     
     CBCentralManager *beaconManager;
 }
 
 @property (nonatomic,assign) id<SPBlueToothManagerDelegate> delegate;
+
+/**
+ timer is designed to run a runloop to refresh RSSI
+ **/
+@property (nonatomic, retain) NSTimer *timer;
+
+- (void)discoverBeacons;
 
 @end

@@ -15,13 +15,40 @@
     self = [super init];
     
     beaconManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil options:nil];
-    
-    if (beaconManager.state != CBCentralManagerStatePoweredOn) {
-        //return;
-    }
-    [beaconManager scanForPeripheralsWithServices:nil options:nil];
+    [self discoverBeacons];
     
     return self;
+}
+
+- (void)discoverBeacons {
+    if (beaconManager.state != CBCentralManagerStatePoweredOn) {
+        NSLog(@"State not powered on");
+        return;
+    }
+    [self scanBegin];
+}
+
+- (void)scanBegin {
+    [beaconManager scanForPeripheralsWithServices:nil options:nil];
+}
+
+//To refresh the value of RSSI every 2 seconds
+- (void)refreshRSSI {
+    if (!self.timer) {
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:2.0
+                                                      target:self
+                                                    selector:@selector(readRSSI)
+                                                    userInfo:nil
+                                                     repeats:1.0];
+        [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
+    }
+}
+
+- (void)connectBeaconWithPeripheral:(CBPeripheral *) peripheral{
+    [beaconManager connectPeripheral:peripheral
+                             options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES]
+                                                                 forKey:CBConnectPeripheralOptionNotifyOnDisconnectionKey]];
+    
 }
 
 
@@ -30,22 +57,29 @@
     if (central.state != CBCentralManagerStatePoweredOn) {
         return;
     }
-    [beaconManager scanForPeripheralsWithServices:nil options:nil];
+    [self scanBegin];
 }
 
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI {
     
-    NSLog(@"Discovered Name: %@", peripheral.name);
-    NSLog(@"Discovered RSSI: %d", [RSSI intValue]);
+    //Filter the Beacons we want
     if ([peripheral.name length] > 8) {
         if ([[peripheral.name substringToIndex:7] isEqualToString:@"D05FB8"]) {
+            
+            peripheral.delegate = self;
+            NSLog(@"Name :%@", peripheral.name);
             SPBeacon *beacon = [[SPBeacon alloc] init];
             beacon.name = peripheral.name;
             beacon.rssi = [NSString stringWithFormat:@"%d", [RSSI intValue]];
+            beacon.uuid = [NSString stringWithFormat:@"%@", peripheral.identifier.UUIDString];
             
             [_delegate beaconManagerDidDiscoverBeacon:beacon];
         }
     }
+}
+
+- (void)centralManager:(CBCentralManager *)central didRetrievePeripherals:(NSArray *)peripherals {
+    NSLog(@"run");
 }
 
 @end
