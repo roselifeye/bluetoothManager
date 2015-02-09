@@ -14,6 +14,9 @@
 @protocol SPBlueToothManagerDelegate <NSObject>
 
 @required
+/**
+ Once the system get the new beacon, this function will be recalled.
+ **/
 - (void)beaconManagerDidDiscoverBeacon:(SPBeacon *)beacon;
 
 @end
@@ -30,6 +33,27 @@
  **/
 @property (nonatomic, retain) NSTimer *timer;
 
+/**
+ beaconFilterID is the prefix-characters of beacons' name or UUID, aimed to filter bluetooth devices which you want.
+ **/
+@property (nonatomic, retain) NSString *beaconFilterID;
+/**
+ filterType is the type of bluetooth devices filter,
+ has two types: 1 = name;
+ 2 = UUID;
+ **/
+@property (nonatomic) int filterType;
+/**
+ beacons shows that all the beacons you get;
+ **/
+@property (strong,nonatomic) NSMutableArray *beacons;
+
+
+/**
+ Start to search beacons
+ **/
 - (void)discoverBeacons;
+
+
 
 @end
