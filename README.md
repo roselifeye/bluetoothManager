@@ -18,3 +18,12 @@ SPBlueToothManager is responsible for Searching beacons(or said bluetooth device
 (1)Work well with beacons searching.
 (2)Filter bluetooth devices with their names.
 (3)Simply use rssi to distinguish the distance from beacons.
+2015.02.09
+1) In foreground mode, the app will continue to display all the beacons' information without filter.
+2) Users can filter beacons by two ways: name & UUID. And also they can define their own filter characters.
+3) Deprecated readRSSI function. The substitute is using the CBCentralManagerScanOptionAllowDuplicatesKey when scan begin.
+4) Add connect to beacons function & fix the connection problems. The app can connects multiple devices at the same time.
+Next:
+1) Add the background mode, which can make the app still refresh RSSI by 1 or 2 seconds, depending on the consideration of the speed of users.
+2) Add the CoreLocation framework to help locate the users.
+3) Add the motion sensor of the iPhone to help judge the direction and the speed of users. 
