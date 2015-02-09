@@ -6,7 +6,7 @@ Recently, I worked with iBeacons. It's a really incredible development for indoo
 This is a similar function, just basic, to iBeacons. It now mainly focuses on how to search the bluetooth devices, read the devices' names, and their rssis. 
 
 # Why this?
-For some reason, Apple only allow users to search, or get information from iBeacons, which you already knew their UUIDs. We only can identify iBeacons by their majors and minors. In addition, the bluetooth devices also have to follow the protocol of iBeacons. ＜/br＞
+＜br＞For some reason, Apple only allow users to search, or get information from iBeacons, which you already knew their UUIDs. We only can identify iBeacons by their majors and minors. In addition, the bluetooth devices also have to follow the protocol of iBeacons. ＜/br＞
 However, we can easily get bluetooth devices, and it is also simple for users to convert their mobile devices to bluetooth devices. In this situation, we can not use the iBeacons apis to support our requirement.
 
 # Functions
