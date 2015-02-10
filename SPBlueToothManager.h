@@ -17,13 +17,15 @@
 /**
  Once the system get the new beacon, this function will be recalled.
  **/
-- (void)beaconManagerDidDiscoverBeacon:(SPBeacon *)beacon;
+- (void)beaconManagerDidDiscoverBeacons:(NSMutableDictionary *)beacons;
 
 @end
 
 @interface SPBlueToothManager : NSObject <CBCentralManagerDelegate, CBPeripheralDelegate> {
     
     CBCentralManager *beaconManager;
+    
+    NSMutableDictionary *beaconsDic;
 }
 
 @property (nonatomic,assign) id<SPBlueToothManagerDelegate> delegate;
@@ -48,12 +50,14 @@
  **/
 @property (strong,nonatomic) NSMutableArray *beacons;
 
-
 /**
  Start to search beacons
  **/
 - (void)discoverBeacons;
 
-
+/**
+ Using singleton to make sure there is only on bluetooth manager in the whole system
+ **/
++ (SPBlueToothManager *)shareInstance;
 
 @end
